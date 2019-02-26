@@ -14,7 +14,7 @@ var homeservers = Array.from(new Set(rawList.split("\n")));
 //console.log(homeservers);
 
 homeservers.forEach(hostname => {
-    var sql = `INSERT INTO homeservers (hostname) VALUES ("${hostname.trim()}")`;
+    var sql = `INSERT INTO homeservers (hostname, visibleFromMatrixOrg) VALUES ("${hostname.trim()}", 1)`;
     console.log(sql);
     db.run(sql, (res, err) => {
         if (res) console.log(res);
