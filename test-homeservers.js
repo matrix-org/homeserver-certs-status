@@ -11,7 +11,7 @@ const db = new sqlite3.Database('./data/visible.db', sqlite3.OPEN_READWRITE | sq
 var allRows = [];
 var currentIndex = 0;
 
-var sqlAllRows = "SELECT * FROM homeservers WHERE gotJsonResponse = 0 ORDER BY lasttested"
+var sqlAllRows = "SELECT * FROM homeservers ORDER BY lasttested"
 db.all(sqlAllRows,  (err, rows) => {
     if (err) {
         console.log(err);
