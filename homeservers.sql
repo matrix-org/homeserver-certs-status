@@ -1,0 +1,1 @@
+CREATE TABLE `homeservers` ( `hostname` TEXT, `lasttested` TEXT, `lastjson` TEXT, `lastparsed` TEXT, `gotJsonResponse` INTEGER, `wellKnownOk` INTEGER, `connectionReports` INTEGER, `allCertsValid` INTEGER)
