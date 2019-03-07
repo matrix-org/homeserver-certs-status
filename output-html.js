@@ -7,7 +7,7 @@ if (process.argv.length < 4) {
     console.log("Script needs template and output locatations.");
     process.exit(1);
 }
-const db = new sqlite3.Database('./data/visible.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
     if (err) {
         console.log("DB", err.message);
     } else {
