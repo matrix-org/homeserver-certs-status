@@ -19,7 +19,7 @@ var totalCount = false;
 var validCount = false;
 
 db.serialize(function() {
-    var sqlFullCount = "select count(*) as c from homeservers";
+    var sqlFullCount = "select count(*) as c from homeservers where connectionReports > 0";
     db.get(sqlFullCount,  (err, row) => {
         if (err) {
             console.log(err);
