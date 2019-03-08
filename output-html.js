@@ -54,5 +54,5 @@ function writeHtml() {
     template = template.replace("%%PERCENT%%", percent);
     template = template.replace("%%UPDATED%%", recordDate);
     fs.writeFileSync(outputLocation, template);
-    fs.appendFileSync("history.txt", `${recordDate}\t${percent}`);
+    fs.appendFileSync("history.txt", `${recordDate}\t${percent}\n`);
 }
