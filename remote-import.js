@@ -9,7 +9,7 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
     }
   });
 
-exec(`remote.sh`, {maxBuffer: 20000000}, (err, stdout, stderr) => {
+exec(`./remote.sh`, {maxBuffer: 20000000}, (err, stdout, stderr) => {
     var size = stdout.length;
     var array = stdout.split("\n");
     array.splice(0, 2);

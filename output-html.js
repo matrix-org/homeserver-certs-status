@@ -41,7 +41,7 @@ function writeHtml() {
     console.log(`Reading template from ${templateLocation}`);
     var template = fs.readFileSync(templateLocation, 'utf-8');
 
-    var outputLocation = process.argv[3] ? process.argv[3] : "../www/arewereadyyet.com/index.html";
+    var outputLocation = process.argv[3] ? process.argv[3] : "../www/arewereadyyet.com/index2.html";
     if (outputLocation.indexOf('.html') === -1) {
         console.log("Output needs to be a .hmtl file");
         process.exit(1);
