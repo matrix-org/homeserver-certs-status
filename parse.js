@@ -9,6 +9,7 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
 
 var allRows = [];
 var currentIndex = 0;
+var intervalId;
 
 var sqlAllRows = "SELECT * FROM homeservers WHERE lasttested IS NOT NULL ORDER BY lastparsed"
 db.all(sqlAllRows,  (err, rows) => {
@@ -17,12 +18,17 @@ db.all(sqlAllRows,  (err, rows) => {
         return;
     }
     allRows = rows;
-    setInterval(parseNext, 10);
+    intervalId = setInterval(parseNext, 10);
 });
 
 function parseNext() {
-    if (currentIndex >= allRows.length) return;
-    var row = allRows[currentIndex]
+    var row = allRows[currentIndex];
+    if (! row) {
+        clearInterval(intervalId);
+        require('./output-html.js');
+        return;
+    }
+
     var lastjson = row.lastjson;
     var gotJsonResponse = false;
     var wellKnownOk = false;

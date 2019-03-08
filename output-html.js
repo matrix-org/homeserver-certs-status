@@ -2,11 +2,8 @@
 
 const fs = require("fs");
 const sqlite3 = require('sqlite3').verbose();
+process.chdir(__dirname);
 
-if (process.argv.length < 4) {
-    console.log("Script needs template and output locatations.");
-    process.exit(1);
-}
 const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
     if (err) {
         console.log("DB", err.message);
@@ -40,18 +37,22 @@ db.serialize(function() {
 });
 
 function writeHtml() {
-    var templateLocation = process.argv[2];
+    var templateLocation = process.argv[2] ? process.argv[2] : "../www/arewereadyyet.com/index-template.html";
     console.log(`Reading template from ${templateLocation}`);
     var template = fs.readFileSync(templateLocation, 'utf-8');
 
-    var outputLocation = process.argv[3];
+    var outputLocation = process.argv[3] ? process.argv[3] : "../www/arewereadyyet.com/index.html";
     if (outputLocation.indexOf('.html') === -1) {
         console.log("Output needs to be a .hmtl file");
         process.exit(1);
     }
     console.log(`Output location: ${outputLocation}`);
 
-    template = template.replace("%%PERCENT%%", (validCount / totalCount).toString());
-    template = template.replace("%%UPDATED%%", (new Date()).toISOString());
+    var recordDate = (new Date()).toISOString();
+    var percent = (validCount / totalCount).toString();
+
+    template = template.replace("%%PERCENT%%", percent);
+    template = template.replace("%%UPDATED%%", recordDate);
     fs.writeFileSync(outputLocation, template);
+    fs.appendFileSync("history.txt", `${recordDate}\t${percent}`);
 }
