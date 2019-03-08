@@ -41,7 +41,7 @@ function writeHtml() {
     console.log(`Reading template from ${templateLocation}`);
     var template = fs.readFileSync(templateLocation, 'utf-8');
 
-    var outputLocation = process.argv[3] ? process.argv[3] : "../www/arewereadyyet.com/index2.html";
+    var outputLocation = process.argv[3] ? process.argv[3] : "../www/arewereadyyet.com/index.html";
     if (outputLocation.indexOf('.html') === -1) {
         console.log("Output needs to be a .hmtl file");
         process.exit(1);
@@ -54,5 +54,5 @@ function writeHtml() {
     template = template.replace("%%PERCENT%%", percent);
     template = template.replace("%%UPDATED%%", recordDate);
     fs.writeFileSync(outputLocation, template);
-    fs.appendFileSync("history.txt", `${recordDate}\t${percent}\n`);
+    fs.appendFileSync("history.txt", `${recordDate}\t${validCount}\t${totalCount}\t${percent}\n`);
 }

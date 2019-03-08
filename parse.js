@@ -62,7 +62,7 @@ function parseNext() {
         allCertsValid = ${allCertsValid},
         lastparsed =  '${(new Date()).toISOString()}'
         WHERE  hostname = "${row.hostname}"`;
-    console.log(sql);
+    //console.log(sql);
     db.run(sql, (res, err) => {
         if (res) console.log(res);
         if (err) {
