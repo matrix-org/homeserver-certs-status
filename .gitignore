@@ -2,3 +2,5 @@ node_modules/
 data/
 .vscode/
 .DS_Store
+remote.sh
+visible.db
