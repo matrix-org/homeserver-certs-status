@@ -10,24 +10,39 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
     }
   });
 
-exec(`./remote.sh`, {maxBuffer: 20000000}, (err, stdout, stderr) => {
-    var size = stdout.length;
-    var array = stdout.split("\n");
-    array.splice(0, 2);
-    array.splice(array.length - 3, 3);
-    array = array.map(user => {return user.split(":")[1].trim()});
-    var set = new Set(array);
-    array = Array.from(set);
-    insertHomeservers(array);
+var userlist = [];
+
+exec(`ssh playsite@play 'bash -s' < remote.sh`, {maxBuffer: 20000000}, (err, stdout, stderr) => {
+    userlist = stdout.split("\n");
+    userlist.splice(0, 2);
+    userlist.splice(userlist.length - 3, 3);
+    var servers = userlist.map(user => {return user.split(":")[1].trim()});
+    servers = new Set(servers);
+    servers = Array.from(servers);
+    insertHomeservers(servers);
 });
 
 function insertHomeservers(homeservers) {
     homeservers.forEach(hostname => {
-        var sql = `INSERT INTO homeservers (hostname) VALUES ("${hostname.trim()}")`;
-        console.log(sql);
-        db.run(sql, (res, err) => {
-            if (res) console.log(res);
-            if (err) console.log(err);
+        hostname = hostname.trim();
+        var usercount = userlist.filter(user => user.indexOf(hostname) !== -1).length;
+
+        db.serialize(function() {
+            var sql = `UPDATE homeservers SET usercount = ${usercount} WHERE hostname = "${hostname}"`;
+            console.log(sql);
+            db.run(sql, (res, err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
+
+            var sqlInsert = `INSERT INTO homeservers (hostname, usercount) VALUES ("${hostname}", ${usercount})`;
+            console.log(sqlInsert);
+            db.run(sqlInsert, (res, err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
         });
     });
 }

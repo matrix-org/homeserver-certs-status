@@ -1,1 +1,1 @@
-CREATE TABLE "homeservers" ( `hostname` TEXT UNIQUE, `lasttested` TEXT, `lastjson` TEXT, `lastparsed` TEXT, `gotJsonResponse` INTEGER, `wellKnownOk` INTEGER, `connectionReports` INTEGER, `allCertsValid` INTEGER )
+CREATE TABLE "homeservers" ( `hostname` TEXT UNIQUE, `lasttested` TEXT, `lastjson` TEXT, `lastparsed` TEXT, `gotJsonResponse` INTEGER, `wellKnownOk` INTEGER, `connectionReports` INTEGER, `allCertsValid` INTEGER, usercount INTEGER )
