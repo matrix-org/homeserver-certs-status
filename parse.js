@@ -6,7 +6,6 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
     if (err) {
         console.log("DB", err.message);
     } else {
-        console.log("DB", 'Connected to the database.');
     }
   });
 
@@ -62,7 +61,6 @@ function parseNext() {
         allCertsValid = ${allCertsValid},
         lastparsed =  '${(new Date()).toISOString()}'
         WHERE  hostname = "${row.hostname}"`;
-    //console.log(sql);
     db.run(sql, (res, err) => {
         if (res) console.log(res);
         if (err) {

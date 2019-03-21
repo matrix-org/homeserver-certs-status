@@ -6,7 +6,6 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
     if (err) {
         console.log("DB", err.message);
     } else {
-        console.log("DB", 'Connected to the database.');
     }
   });
 
@@ -29,7 +28,6 @@ function insertHomeservers(homeservers) {
 
         db.serialize(function() {
             var sql = `UPDATE homeservers SET usercount = ${usercount} WHERE hostname = "${hostname}"`;
-            console.log(sql);
             db.run(sql, (res, err) => {
                 if (err) {
                     console.log(err);
@@ -37,7 +35,6 @@ function insertHomeservers(homeservers) {
             });
 
             var sqlInsert = `INSERT INTO homeservers (hostname, usercount) VALUES ("${hostname}", ${usercount})`;
-            console.log(sqlInsert);
             db.run(sqlInsert, (res, err) => {
                 if (err) {
                     console.log(err);

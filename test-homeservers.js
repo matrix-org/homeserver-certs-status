@@ -7,7 +7,6 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
     if (err) {
         console.log("DB", err.message);
     } else {
-        console.log("DB", 'Connected to the database.');
     }
   });
 
@@ -25,9 +24,8 @@ db.all(sqlAllRows,  (err, rows) => {
 });
 
 function testNext() {
-    if (currentIndex > allRows.length) return;
-    var hostname = allRows[currentIndex].hostname
-    console.log(hostname);
+    if (! allRows[currentIndex].hostname) return;
+    var hostname = allRows[currentIndex].hostname;
     testHostname(hostname);
     currentIndex++;
 }
@@ -42,7 +40,6 @@ function testHostname(hostname) {
         });
 
         resp.on('end', () => {
-            console.log(`Storing raw JSON for ${hostname}`);
             updateRawJson(hostname, data);
         });
 
@@ -55,7 +52,6 @@ function updateRawJson(hostname, json) {
     var sql = `UPDATE homeservers
         SET lastjson = '${json.replace(/\'/g, "''")}', lasttested =  '${(new Date()).toISOString()}'
         WHERE  hostname = "${hostname}"`;
-    //console.log(sql);
     db.run(sql, (res, err) => {
         if (res) console.log(res);
         if (err) {

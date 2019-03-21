@@ -8,7 +8,6 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
     if (err) {
         console.log("DB", err.message);
     } else {
-        console.log("DB", 'Connected to the database.');
     }
 });
 
@@ -31,14 +30,14 @@ db.serialize(function() {
             return;
         }
         validCount = row.v;
-        console.log(totalCount, validCount);
+        //console.log(totalCount, validCount);
         writeHtml();
     });
 });
 
 function writeHtml() {
     var templateLocation = process.argv[2] ? process.argv[2] : "../www/arewereadyyet.com/index-template.html";
-    console.log(`Reading template from ${templateLocation}`);
+    //console.log(`Reading template from ${templateLocation}`);
     var template = fs.readFileSync(templateLocation, 'utf-8');
 
     var outputLocation = process.argv[3] ? process.argv[3] : "../www/arewereadyyet.com/index.html";
@@ -46,7 +45,7 @@ function writeHtml() {
         console.log("Output needs to be a .hmtl file");
         process.exit(1);
     }
-    console.log(`Output location: ${outputLocation}`);
+    //console.log(`Output location: ${outputLocation}`);
 
     var recordDate = (new Date()).toISOString();
     var percent = (validCount / totalCount).toString();
