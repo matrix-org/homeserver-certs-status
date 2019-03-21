@@ -24,7 +24,7 @@ db.all(sqlAllRows,  (err, rows) => {
 });
 
 function testNext() {
-    if (! allRows[currentIndex].hostname) return;
+    if (! allRows[currentIndex]) return;
     var hostname = allRows[currentIndex].hostname;
     testHostname(hostname);
     currentIndex++;
