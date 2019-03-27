@@ -48,7 +48,7 @@ function parseNext() {
         connectionReports = Object.keys(lastjson.ConnectionReports);
         if (connectionReports.length > 0) allCertsValid = true;
         connectionReports.forEach(ip => {
-            if (! lastjson.ConnectionReports[ip].ValidCertificates) {
+            if (! lastjson.ConnectionReports[ip].Checks.ValidCertificates) {
                 allCertsValid = false;
             }
         });
