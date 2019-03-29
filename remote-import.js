@@ -24,7 +24,11 @@ exec(`./remote.sh`, {maxBuffer: 20000000}, (err, stdout, stderr) => {
 function insertHomeservers(homeservers) {
     homeservers.forEach(hostname => {
         hostname = hostname.trim();
-        var usercount = userlist.filter(user => user.indexOf(hostname) !== -1).length;
+        var usercount = userlist.filter(user => 
+            user.indexOf(hostname) !== -1 &&
+            user.indexOf("freenode") === -1 &&
+            user.indexOf("discord") === -1 &&
+            user.indexof("telegram" === -1)).length;
 
         db.serialize(function() {
             var sql = `UPDATE homeservers SET usercount = ${usercount} WHERE hostname = "${hostname}"`;
