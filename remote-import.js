@@ -28,7 +28,7 @@ function insertHomeservers(homeservers) {
             user.indexOf(hostname) !== -1 &&
             user.indexOf("freenode") === -1 &&
             user.indexOf("discord") === -1 &&
-            user.indexof("telegram" === -1)).length;
+            user.indexOf("telegram" === -1)).length;
 
         db.serialize(function() {
             var sql = `UPDATE homeservers SET usercount = ${usercount} WHERE hostname = "${hostname}"`;
