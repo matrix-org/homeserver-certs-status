@@ -27,28 +27,29 @@ function insertHomeservers(homeservers) {
         // long list of mxid strings which indicate that this might be a
         // bridged user. need to string match because it's not possible
         // to confirm over federation who is bridged (or a bot)
-        var usercount = userlist.filter(user => 
-            user.indexOf(hostname) !== -1 &&
-            user.indexOf("freenode") === -1 &&
-            user.indexOf("discord") === -1 &&
-            user.indexOf("telegram") === -1 &&
-            user.indexOf("_gimpnet_") === -1 &&
-            user.indexOf("mozilla_") === -1 &&
-            user.indexOf("_rizon_") === -1 &&
-            user.indexOf("torn_") === -1 &&
-            user.indexOf("wammux_") === -1 &&
-            user.indexOf("_xmpp_") === -1 &&
-            user.indexOf("_twitter_") === -1 &&
-            user.indexOf("gitter_") === -1 &&
-            user.indexOf("_espernet_") === -1 &&
-            user.indexOf("_neb_rssbot_") === -1 &&
-            user.indexOf("slack_") === -1 &&
-            user.indexOf("_oftc_") === -1 &&
-            user.indexOf("w3c_") === -1 &&
-            user.indexOf("_foonetic_") === -1 &&
-            user.indexOf("_rocketchat_") === -1 &&
-            user.indexOf("_snoonet_") === -1
-            ).length;
+        // var usercount = userlist.filter(user => 
+        //     user.indexOf(hostname) !== -1 &&
+        //     user.indexOf("freenode") === -1 &&
+        //     user.indexOf("discord") === -1 &&
+        //     user.indexOf("telegram") === -1 &&
+        //     user.indexOf("_gimpnet_") === -1 &&
+        //     user.indexOf("mozilla_") === -1 &&
+        //     user.indexOf("_rizon_") === -1 &&
+        //     user.indexOf("torn_") === -1 &&
+        //     user.indexOf("wammux_") === -1 &&
+        //     user.indexOf("_xmpp_") === -1 &&
+        //     user.indexOf("_twitter_") === -1 &&
+        //     user.indexOf("gitter_") === -1 &&
+        //     user.indexOf("_espernet_") === -1 &&
+        //     user.indexOf("_neb_rssbot_") === -1 &&
+        //     user.indexOf("slack_") === -1 &&
+        //     user.indexOf("_oftc_") === -1 &&
+        //     user.indexOf("w3c_") === -1 &&
+        //     user.indexOf("_foonetic_") === -1 &&
+        //     user.indexOf("_rocketchat_") === -1 &&
+        //     user.indexOf("_snoonet_") === -1
+        //     ).length;
+        var usercount = userlist.length;
 
         db.serialize(function() {
             var sql = `UPDATE homeservers SET usercount = ${usercount} WHERE hostname = "${hostname}"`;
