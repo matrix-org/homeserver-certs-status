@@ -62,6 +62,7 @@
             <img class="my-4" style="width: 180px;" src="https://matrix.org/blog/wp-content/uploads/2015/01/logo1.png" />
             <h3 class="my-4">Matrix 1.0-ready Federation</h3>
             <div id="svg-dial"></div>
+            <div id="svg-usersdial"></div>
             <p class="small my-4">
               Of all servers visible from matrix.org, this is the percentage which have correct valid TLS certificates.
             </p>
@@ -103,6 +104,18 @@
     });
     dial.setValue(%%PERCENT%%);
     dial.config({disabled: true});
+
+
+    var usersDial = new SVGDial('#svg-usersdial', {
+      ringBackgroundColor: ['#f44', '#84c535'],
+      frameBackgroundColor: 'white',
+      frameSize: 360,
+      ringWidth: 35,
+      fontSize: 100,
+      //disabled: true
+    });
+    usersDial.setValue(%%USERPERCENT%%);
+    usersDial.config({disabled: true});
 
     $(document).ready(function() {
       $("#btnCheck").click(function() {

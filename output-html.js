@@ -42,16 +42,16 @@ db.serialize(function() {
             console.log(err);
             return;
         }
-        valuidUsers = row.c;
+        totalUsers = row.c;
     });
 
     var sqlValidUserCount = "select sum(usercount) as c from homeservers where allCertsValid = 1";
-    db.get(sqlFullUserCount,  (err, row) => {
+    db.get(sqlValidUserCount,  (err, row) => {
         if (err) {
             console.log(err);
             return;
         }
-        totalUsers = row.c;
+        validUsers = row.c;
         writeHtml();
     });
 });
