@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Matrix 1.0-ready Federation</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Chivo" rel="stylesheet">
+  
+  <style>
+    body {
+      color: rgb(102, 102, 102);
+    }
+    @import url('https://rsms.me/inter/inter.css');
+    html { font-family: 'Inter', sans-serif; }
+    @supports (font-variation-settings: normal) {
+      html { font-family: 'Inter var', sans-serif; }
+    }
+  </style>
+
+
+<!-- Matomo -->
+<script type="text/javascript">
+  var _paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//piwik.riot.im/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '11']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
+
+<!-- twitter -->
+<meta name="twitter:card" value="summary_large_image" />
+<meta name="twitter:url" value="https://www.arewereadyyet.com/" />
+<meta name="twitter:title" value="Matrix 1.0-ready Federation" />
+<meta name="twitter:description" value="" />
+<meta name="twitter:image" value="https://www.arewereadyyet.com/dial-image.png" />
+<meta name="twitter:site" value="@matrixdotorg" />
+
+</head>
+
+<body>
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <img class="my-4" style="width: 180px;" src="https://matrix.org/blog/wp-content/uploads/2015/01/logo1.png" />
+            <h3 class="my-4">Matrix 1.0-ready Federation</h3>
+            <div id="svg-dial"></div>
+            <p class="small my-4">
+              Of all servers visible from matrix.org, this is the percentage which have correct valid TLS certificates.
+            </p>
+            <p class="my-4">
+              Synapse 1.0 will support only the r0 release of the <a target="_blank" href="https://matrix.org/docs/spec/server_server/r0.1.1.html">Server to Server spec</a> as used in the upcoming Matrix 1.0 standard. As a result it will not federate with Homeservers using self-signed certificates. It is essential that all homeserver admins configure their certificate prior to the release! For more information and a guide to configuring your certificates, take a look at our <a target="_blank" href="https://github.com/matrix-org/synapse/blob/master/docs/MSC1711_certificates_FAQ.md">handy guide</a>.
+            </p>
+            <div class="input-group input-group-lg">
+              <input class="input-group-text w-75" type="text" id="txtHostname" />
+              <button class="btn btn-primary ml-2" id="btnCheck">Check My Server!</button>
+            </div>
+            <p class="my-4">
+              We expect to launch Synapse 1.0 in April. We do not have a hard date because it depends on how fast people upgrade! Note that it's not necessary for this number to reach 100% before the launch of Synapse 1.0, but after that time, any servers which do not have valid certificates will not be able to federate.
+            </p>
+            <p>
+              Last Updated <span class="font-italic">%%UPDATED%%</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"></script>
+  <script type="text/javascript" src="svg-dial.js"></script>
+  <script type="text/javascript">
+    // // globals
+    var dial = new SVGDial('#svg-dial', {
+      ringBackgroundColor: ['#f44', '#84c535'],
+      frameBackgroundColor: 'white',
+      frameSize: 360,
+      ringWidth: 35,
+      fontSize: 100,
+      //disabled: true
+    });
+    dial.setValue(%%PERCENT%%);
+    dial.config({disabled: true});
+
+    $(document).ready(function() {
+      $("#btnCheck").click(function() {
+        window.location = "https://matrix.org/federationtester/#" + $("#txtHostname").val();
+      });
+      $("#txtHostname").bind('keypress', function(e) {
+          if (e.keyCode === 13){
+            $("#btnCheck").click();
+          }
+      });
+    });
+  </script>
+</body>
+
+</html>

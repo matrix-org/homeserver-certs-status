@@ -15,7 +15,7 @@ var totalCount = false;
 var validCount = false;
 
 var totalUsers = false;
-var valuidUsers = false;
+var validUsers = false;
 
 db.serialize(function() {
     var sqlFullCount = "select count(*) as c from homeservers where connectionReports > 0";
