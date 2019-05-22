@@ -14,6 +14,9 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
 var totalCount = false;
 var validCount = false;
 
+var totalUsers = false;
+var valuidUsers = false;
+
 db.serialize(function() {
     var sqlFullCount = "select count(*) as c from homeservers where connectionReports > 0";
     db.get(sqlFullCount,  (err, row) => {
@@ -23,6 +26,7 @@ db.serialize(function() {
         }
         totalCount = row.c;
     });
+
     var sqlValidCount = "select count(*) as v from homeservers where allCertsValid = 1";
     db.get(sqlValidCount,  (err, row) => {
         if (err) {
@@ -30,7 +34,24 @@ db.serialize(function() {
             return;
         }
         validCount = row.v;
-        //console.log(totalCount, validCount);
+    });
+
+    var sqlFullUserCount = "select sum(usercount) as c from homeservers where connectionReports > 0";
+    db.get(sqlFullUserCount,  (err, row) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        valuidUsers = row.c;
+    });
+
+    var sqlValidUserCount = "select sum(usercount) as c from homeservers where allCertsValid = 1";
+    db.get(sqlFullUserCount,  (err, row) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        totalUsers = row.c;
         writeHtml();
     });
 });
@@ -49,9 +70,11 @@ function writeHtml() {
 
     var recordDate = (new Date()).toISOString();
     var percent = (validCount / totalCount).toString();
+    var userPercent = (validUsers / totalUsers).toString();
 
     template = template.replace("%%PERCENT%%", percent);
+    template = template.replace("%%USERPERCENT%%", userPercent);
     template = template.replace("%%UPDATED%%", recordDate);
     fs.writeFileSync(outputLocation, template);
-    fs.appendFileSync("history.txt", `${recordDate}\t${validCount}\t${totalCount}\t${percent}\n`);
+    fs.appendFileSync("history.txt", `${recordDate}\t${validCount}\t${totalCount}\t${percent}\t${validUsers}\t${totalUsers}\t${userPercent}\n`);
 }
