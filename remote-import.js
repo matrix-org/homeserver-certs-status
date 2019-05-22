@@ -11,7 +11,7 @@ const db = new sqlite3.Database('./visible.db', sqlite3.OPEN_READWRITE | sqlite3
 
 var userlist = [];
 
-exec(`./remote.sh`, {maxBuffer: 20000000}, (err, stdout, stderr) => {
+exec(`psql -c "select DISTINCT(sender) FROM matrix.events where origin_server_ts > 1546348734000;"`, {maxBuffer: 20000000}, (err, stdout, stderr) => {
     userlist = stdout.split("\n");
     userlist.splice(0, 2);
     userlist.splice(userlist.length - 3, 3);

@@ -31,7 +31,7 @@ function testNext() {
 }
   
 function testHostname(hostname) {
-    var url = `https://matrix.org/federationtester/api/report?server_name=${hostname}`;
+    var url = `https://federationtester.matrix.org/api/report?server_name=${hostname}`;
     https.get(url, (resp) => {
         let data = '';
 
